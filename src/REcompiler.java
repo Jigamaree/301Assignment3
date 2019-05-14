@@ -9,9 +9,8 @@ indicating the two possible next states if a match is made.
 
 */
 
-import java.awt.desktop.SystemEventListener;
+import java.util.ArrayList;
 
-import static jdk.internal.jline.internal.Log.error;
 
 public class REcompiler
 {
@@ -28,104 +27,98 @@ public class REcompiler
         for (int i = 0; i < p.length; i++)
             System.out.print(p[i]);
 
+        System.out.println();
+        Compiler c = new Compiler(p);
+
+        c.parse();
     }
 
 }
 
-public class theCompiler
+class Compiler
 {
+//    Grammar
+//	-------
+//    E -> T
+//    E -> T E
+//    T -> F
+//    T -> F*
+//    T -> F+T
+//    F -> v
+//    F -> (E)
+//
+//    ArrayList<Character> ch = new ArrayList<Character>();
+//    ArrayList<Integer> next1 = new ArrayList<Integer>();
+//    ArrayList<Integer> next2 = new ArrayList<Integer>();
+//    ArrayList<Character> p;
+
     char[] ch;
     int[] next1;
     int[] next2;
-
     char[] p;
     int j;
-    int state = 1;
+    int state = 0;
 
-    /*****************************************************************/
+    public Compiler(char[] passedValue)
+    {
+        p = passedValue;
+        ch = new char[999];
+        next1 = new int[999];
+        next2 = new int[999];
+    }
+
     void parse()
     {
-        int initial;
-
-        initial=expression();
-        if( p[j] ) error(); // In C, zero is false, not zero is true
+        //inital = the start state for the expression
+        int initial = expression();
         set_state(state,' ',0,0);
-    }
-
-
-    void set_state(int s, char c, int n1, int n2)
-    {
-        //int set_state(int s, char c, int n1, int n2)
-        ch[s]=c;
-        next1[s]=n1;
-        next2[s]=n2;
-    }
-
-    boolean isvocab(char c)
-    {
-        char[] compareList = {'.','*','?', '|', '(', ')', '[', ']', '^', 'A', '\\'};
-        for (char l: compareList){
-            if (c == l) return false;
-        }
-        return true;
+        for (int i = 0; i < p.length; i++) System.out.println(ch[i] + " " + next1[i] + " " + next2[i]);
+        System.out.println("Inital start state: " + initial);
     }
 
     int expression()
     {
         int r;
-
-        r=term();
-        if(isvocab(p[j])||p[j]=='[') expression();
+        r = term();
+        if (j < p.length) {
+            if (isvocab(p[j]) || p[j] == '(')
+                expression();
+        }
         return(r);
     }
 
     int term()
     {
-        int r;
-        int t1;
-        int t2;
-        int f;
-
-        f = state-1;
-        r = t1=factor();
-
-        if(p[j]=='*'){
-            set_state(state,' ',state+1,t1);
-            j++; r=state; state++;
-        }
-        if(p[j]=='+'){
-            if(next1[f]==next2[f])
-                next2[f]=state;
-            next1[f]=state;
-            f=state-1;
-            j++;r=state;state++;
-            t2=term();
-            set_state(r,' ',t1,t2);
-            if(next1[f]==next2[f])
-                next2[f]=state;
-            next1[f]=state;
-        }
+        int r,t1,t2,f;
+        f=state-1;
+        r=t1=factor();
         return(r);
     }
 
     int factor()
     {
-        int r;
-
-        if(isvocab(p[j])){
-            set_state(state,p[j],state+1,state+1);
-            j++;r=state; state++;
+        int r = -1;
+        if(isvocab(p[j]))
+        {
+            set_state(state, p[j],state+1,state+1);
+            j++;
+            r=state;
+            state++;
         }
-        else
-        if(p[j]=='['){
-            j++; r=expression();
-            if(p[j]==']')
-                j++;
-            else
-                error();
-        }
-        else
-            error();
         return(r);
+    }
+
+    void set_state(int s, char c, int n1, int n2)
+    {
+        ch[s]=c;
+        next1[s]=n1;
+        next2[s]=n2;
+    }
+
+    boolean isvocab(char c) {
+        char[] compare = {'(', '+'};
+        for (char v: compare)
+            if (c == v) return false;
+        return true;
     }
 }
