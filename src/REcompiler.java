@@ -72,7 +72,7 @@ class Compiler
         //inital = the start state for the expression
         int initial = expression();
         set_state(state,' ',0,0);
-        for (int i = 0; i < p.length; i++) System.out.println(ch[i] + " " + next1[i] + " " + next2[i]);
+        for (int i = 0; i < p.length; i++) System.out.println(i + " | " + ch[i] + " " + next1[i] + " " + next2[i]);
         System.out.println("Inital start state: " + initial);
     }
 
@@ -92,6 +92,13 @@ class Compiler
         int r,t1,t2,f;
         f=state-1;
         r=t1=factor();
+        if(p[j]=='*')
+        {
+            set_state(state,' ',state+1,t1);
+            j++;
+            r=state;
+            state++;
+        }
         return(r);
     }
 
@@ -105,6 +112,18 @@ class Compiler
             r=state;
             state++;
         }
+        else
+        if(p[j]=='(')
+        {
+            j++;
+            r=expression();
+            System.out.println('*');
+            if (j>=p.length) errorState("1) Reached end of expression without matching bracket");
+            if(p[j]==')')
+                j++;
+            else errorState("2) No matching bracket");
+        }
+        //if (p[j] == ')') errorState("Unmatched bracket");
         return(r);
     }
 
@@ -116,9 +135,15 @@ class Compiler
     }
 
     boolean isvocab(char c) {
-        char[] compare = {'(', '+'};
+        char[] compare = {'(', '+', ')'};
         for (char v: compare)
             if (c == v) return false;
         return true;
+    }
+
+    void errorState(String s)
+    {
+        System.out.println("Error: " + s);
+        System.exit(1);
     }
 }
