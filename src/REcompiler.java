@@ -26,10 +26,9 @@ OTHER BUGS:
 
 import java.io.BufferedWriter;
 
-public class REcompiler
-{
+public class REcompiler {
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
         //simple error check
         if (args.length != 1) {
             System.out.println("Error - one argument only");
@@ -56,8 +55,7 @@ public class REcompiler
         int[] next2 = c.next2;
         int state = c.state;
 
-        for(int i = 0; i <= state; i++)
-        {
+        for (int i = 0; i <= state; i++) {
             //output (ch[i] + " " + next1[i] + " " + next2[i]);
         }
 
@@ -89,8 +87,7 @@ F -> ^[v v v v] (as long as its NOT one of those values, you good my dude)
 F -> \v (where v is a value that would otherwise have a special meaning)
  */
 
-class Compiler
-{
+class Compiler {
 
     //global variables
     char[] ch;
@@ -102,8 +99,7 @@ class Compiler
 
     /*creates compiler; im sure there's a more elegant solution to the arrays
     besides initalising them to a stupid high number, but beats me what it is :D */
-    public Compiler(char[] passedValue)
-    {
+    public Compiler(char[] passedValue) {
         p = passedValue;
         ch = new char[999];
         next1 = new int[999];
@@ -113,98 +109,89 @@ class Compiler
     /*first called function; keeps tract of the inital state that the expression starts
     from. Once it returns the expression has been complete; it then writes the resulting
     FSM to the screen */
-    void parse()
-    {
+    void parse() {
         //inital = the start state for the expression
         int initial = expression();
-        set_state(state,' ',0,0);
-        for (int i = 0; i <= state; i++)
-        {
+        set_state(state, ' ', 0, 0);
+        for (int i = 0; i <= state; i++) {
             if (i < 10) System.out.println(i + " | " + ch[i] + " " + next1[i] + " " + next2[i]);
             else System.out.println(i + " | " + ch[i] + " " + next1[i] + " " + next2[i]);
         }
         System.out.println("Inital start state: " + initial);
     }
 
-    int expression()
-    {
+    int expression() {
         int r;
         r = term();
         if (j < p.length) {
             if (isvocab(p[j]) || p[j] == '(')
                 expression();
         }
-        return(r);
+        return (r);
     }
 
-    int term()
-    {
-        int r,t1,t2,f;
-        f=state-1;
-        r=t1=factor();
-        if (j == p.length) return(r);
+    int term() {
+        int r, t1, t2, f;
+        f = state - 1;
+        r = t1 = factor();
+        if (j == p.length) return (r);
 
         //if we can see something 0-infinite times
-        if(p[j]=='*')
-        {
-            set_state(state,' ',state+1,t1);
+        if (p[j] == '*') {
+            set_state(state, ' ', state + 1, t1);
             j++;
-            r=state;
+            r = state;
             state++;
         }
 
         //the OR statement of this regex
-        if(p[j]=='|')
-        {
+        if (p[j] == '|') {
             if (f == -1) f = 0;
-            if(next1[f]==next2[f])
-                next2[f]=state;
-            next1[f]=state;
-            f=state-1;
-            j++;r=state;state++;
-            t2=term();
-            set_state(r,' ',t1,t2);
-            if(next1[f]==next2[f])
-                next2[f]=state;
-            next1[f]=state;
+            if (next1[f] == next2[f])
+                next2[f] = state;
+            next1[f] = state;
+            f = state - 1;
+            j++;
+            r = state;
+            state++;
+            t2 = term();
+            set_state(r, ' ', t1, t2);
+            if (next1[f] == next2[f])
+                next2[f] = state;
+            next1[f] = state;
         }
-        return(r);
+        return (r);
     }
 
-    int factor()
-    {
+    int factor() {
         int r = 0;
 
         //is just a literal
-        if(isvocab(p[j]))
-        {
-            set_state(state, p[j],state+1,state+1);
+        if (isvocab(p[j])) {
+            set_state(state, p[j], state + 1, state + 1);
             j++;
-            r=state;
+            r = state;
             state++;
         }
 
         //is bracketed
-        else if(p[j]=='(')
-        {
+        else if (p[j] == '(') {
             checkForEmpty();
             j++;
-            r=expression();
+            r = expression();
             System.out.println('*');
-            if (j>=p.length) errorState("Reached end of regex before finding matching bracket");
-            if(p[j]==')')
+            if (j >= p.length) errorState("Reached end of regex before finding matching bracket");
+            if (p[j] == ')')
                 j++;
             else errorState("No matching bracket");
         }
 
         //is in square brackets - NOT IMPLEMENTED
-        else if (p[j] == '[')
-            {
-                checkForEmpty();
-                j++;
-                //if this returns clear, if the second value is a ] we can add that to our checklist safely
-                if(p[j+1]==']')
-                {
+        else if (p[j] == '[') {
+            checkForEmpty();
+            j++;
+            //if this returns clear, if the second value is a ] we can add that to our checklist safely
+            if (p[j + 1] == ']') {
                 /* go through, add all to list
                 then cycle through list, n1 going to next part of list, n2 going to end
                 eg: a[bcd]e
@@ -215,16 +202,14 @@ class Compiler
                 4 | e 5 5
                 5 |   0 0
                 */
-                }
+            }
 
         }
 
         //is in ^[] brackets - NOT IMPLEMENTED
-        else if (p[j] == '^')
-        {
-            if (p[j+1] != '[') errorState("^ was not followed by [");
-            else
-            {
+        else if (p[j] == '^') {
+            if (p[j + 1] != '[') errorState("^ was not followed by [");
+            else {
                 /* Think will be similar process to above? may need to transform p[] into a
                 string array (changing all other calls as necessary), adding all values contained
                 in ^[] into one string (eg "abcd1@"), transform that into a char array and then
@@ -236,8 +221,7 @@ class Compiler
         }
 
         //if we want to make a special character not special anymore. :( NOT IMPLEMENTED
-        else if (p[j] == '\\')
-        {
+        else if (p[j] == '\\') {
             /*
             Think will involve some sort of variable on the factor level which makes
             isvocab() return true - dummy code in 'isvocab'
@@ -246,16 +230,15 @@ class Compiler
             */
         }
 
-        return(r);
+        return (r);
     }
 
     //sets the state in the arrays
-    void set_state(int s, char c, int n1, int n2)
-    {
+    void set_state(int s, char c, int n1, int n2) {
         //System.out.println(s + " | " + c + " " + n1 + " " + n2);
-        ch[s]=c;
-        next1[s]=n1;
-        next2[s]=n2;
+        ch[s] = c;
+        next1[s] = n1;
+        next2[s] = n2;
     }
 
     //checks the value isnt special
@@ -269,29 +252,24 @@ class Compiler
         }
         */
         char[] compare = {'(', '+', ')', '^', '*'};
-        for (char v: compare)
+        for (char v : compare)
             if (c == v) return false;
         return true;
     }
 
     //quits out of the program if the regex at any point violates any specifications; reports to screen error
-    void errorState(String s)
-    {
+    void errorState(String s) {
         System.out.println("Error: " + s);
         System.exit(1);
     }
 
     /*method checks that if a left bracket - (, [ - that it is used legally within the grammar
     this does NOT check the contents itself is legal, nor for missing brackets */
-    void checkForEmpty()
-    {
-        if (p.length == 1 || (p[j]=='(' && p[j+1] == ')')) errorState("Brackets cannot be empty");
-        if (p[j] == '[')
-        {
-            if (p[j+1] == ']')
-            {
-                for (int i = j+1; i <= p.length; i++)
-                {
+    void checkForEmpty() {
+        if (p.length == 1 || (p[j] == '(' && p[j + 1] == ')')) errorState("Brackets cannot be empty");
+        if (p[j] == '[') {
+            if (p[j + 1] == ']') {
+                for (int i = j + 1; i <= p.length; i++) {
                     if (p[i] == ']') return;
                 }
                 errorState("did not have a closing square bracket");
