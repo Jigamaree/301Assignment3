@@ -11,6 +11,9 @@ import java.io.FileReader;
 import java.util.LinkedList;
 
 public class REsearcher {
+    private static final char BRANCH = ' ';
+    private static final char WILDCARD = '.';
+
     private static LinkedList<State> fsmStates = new LinkedList<>();
     private static Dequeue dequeue;
 
@@ -57,13 +60,13 @@ public class REsearcher {
                 else dequeue.push(currState);
             }
             //Branching state, space char as character. Add both states to current states, head of dequeue
-            else if (currState.getCharacter() == ' ') {
+            else if (currState.getCharacter() == BRANCH) {
                 dequeue.addToHead(fsmStates.get(currState.getNext1()));
                 dequeue.addToHead(fsmStates.get(currState.getNext2()));
                 branchActive = true;
             }
             //Match made, if final state return true otherwise move onto next state and next character of string
-            else if (currState.getCharacter() == str.charAt(0) || currState.getCharacter() == '.') {
+            else if (currState.getCharacter() == str.charAt(0) || currState.getCharacter() == WILDCARD) {
                 currState = fsmStates.get(currState.getNext1());
                 if (currState.getNext1() == 0 && currState.getNext2() == 0) return true;
                 dequeue.push(currState);
@@ -71,7 +74,7 @@ public class REsearcher {
             }
             //Give a second run if branch
             else if (branchActive) branchActive = false;
-                //No match/branch/SCAN, return false
+            //No match/branch/SCAN, return false
             else return false;
         }
         //Final state not reached with end of string, return false
@@ -80,7 +83,7 @@ public class REsearcher {
 
     private static void buildMachine() {
         int statenum, next1, next2;
-        String character;
+        char character;
         String[] line;
         try {
             //Read each line/state from stdin and add to list of states.
@@ -88,18 +91,18 @@ public class REsearcher {
             while (in.hasNextLine()) {
                 line = in.nextLine().split("[ ]+"); //Separated by any number of spaces
                 statenum = Integer.parseInt(line[0]);
-                if (line.length == 5) { //Account for case with character
-                    character = line[2]; //Ignore line[1] = bar
+                if (line.length == 5) { //Case with character
+                    if (line[2].length() != 1) throw new Exception("Only input one character per state.");
+                    character = line[2].charAt(0); //Ignore line[1] = bar
                     next1 = Integer.parseInt(line[3]);
                     next2 = Integer.parseInt(line[4]);
-                } else if (line.length == 4) { //Account for case with no character
-                    character = " ";                                    //Branch state indicator = space
+                } else if (line.length == 4) { //Case with no character (because space char is branch indicator, ignored by split)
+                    character = BRANCH;
                     next1 = Integer.parseInt(line[2]);
                     next2 = Integer.parseInt(line[3]);
                 } else
                     throw new Exception("Wrong number of items in line.");
-                if (character.length() != 1) throw new Exception("Only input one character per state.");
-                fsmStates.add(statenum, new State(statenum, character.charAt(0), next1, next2));
+                fsmStates.add(statenum, new State(statenum, character, next1, next2));
             }
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
