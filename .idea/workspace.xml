@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8357fef8-cde6-4561-b4e2-bec4c70f20fa" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/301Assignment3/Compiler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/301Assignment3/Compiler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/301Assignment3/REcompiler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/301Assignment3/REcompiler.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/REcompiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/REcompiler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.txt" beforeDir="false" afterPath="$PROJECT_DIR$/test.txt" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -24,10 +19,12 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/REcompiler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="432">
-              <caret line="157" column="25" selection-start-line="157" selection-start-column="25" selection-end-line="157" selection-end-column="25" />
+            <state relative-caret-position="464">
+              <caret line="138" lean-forward="true" selection-start-line="138" selection-end-line="138" />
               <folding>
                 <element signature="e#0#8293#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="method#checkBrackets#0;class#REcompiler#0" />
               </folding>
             </state>
           </provider>
@@ -136,7 +133,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1558450678292" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1558457177374" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../301Assignment1/MakeRuns.tmp" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
@@ -164,7 +161,7 @@
     <configuration name="REcompiler" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="REcompiler" />
       <module name="301Assignment3" />
-      <option name="PROGRAM_PARAMETERS" value="b?" />
+      <option name="PROGRAM_PARAMETERS" value="a[abc?d]" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -236,13 +233,13 @@
       <window_info id="Learn" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4728145" visible="true" weight="0.25893825" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.47654584" weight="0.3347779" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.46908316" visible="true" weight="0.25893825" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.4728145" weight="0.3347779" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5271855" side_tool="true" visible="true" weight="0.25893825" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.53091687" side_tool="true" visible="true" weight="0.25893825" />
       <window_info anchor="bottom" id="Version Control" order="9" />
       <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.49418926" weight="0.28185746" />
       <window_info anchor="right" id="Coverage" side_tool="true" weight="0.32995737" />
@@ -266,9 +263,9 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/REcompiler.java</url>
-          <line>154</line>
+          <line>110</line>
           <properties />
-          <option name="timeStamp" value="4" />
+          <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -332,10 +329,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/REcompiler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="157" column="25" selection-start-line="157" selection-start-column="25" selection-end-line="157" selection-end-column="25" />
+        <state relative-caret-position="464">
+          <caret line="138" lean-forward="true" selection-start-line="138" selection-end-line="138" />
           <folding>
             <element signature="e#0#8293#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="method#checkBrackets#0;class#REcompiler#0" />
           </folding>
         </state>
       </provider>

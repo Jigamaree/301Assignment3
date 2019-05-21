@@ -9,10 +9,10 @@ indicating the two possible next states if a match is made.
 
 Currently satisfies current rules:
 (* = known bugs exist)
-1, 2, 3, 4, 6, 7*, 11
+1, 2, 3, 4, 5, 6, 7, 11
 
 Need to make work:
-5 (?), 8( [] ), 9 ( ^[] ), 10 (\)
+8( [] ), 9 ( ^[] ), 10 (\)
 
 ACTIVE BUGS:
 1) Can't catch stray ) brackets; treated like the end of the expression and will cut off regex early in worst
@@ -24,10 +24,13 @@ N/A
 */
 
 import java.io.BufferedWriter;
+import java.util.ArrayList;
 
 public class REcompiler {
 
     public static void main(String[] args) {
+        System.out.println("REcompiler: Start!");
+
         //simple error check
         if (args.length != 1) {
             System.out.println("Error - one argument only");
@@ -37,24 +40,125 @@ public class REcompiler {
         //imports input to array
         char[] p = args[0].toCharArray();
 
+        checkBrackets(p);
+        //assuming no errors, convert any [abc] lists to (a|b|c) form
+        char[] pp = convertLists(p);
+
+        Compiler c = new Compiler(pp);
+
         //prints regex to screen: error checking purposes
         System.out.print("Regex: ");
         for (int i = 0; i < p.length; i++)
             System.out.print(p[i]);
         System.out.println();
 
+        //prints converted
+        System.out.print("Converted Regex: ");
+        for (int i = 0; i < pp.length; i++)
+            System.out.print(pp[i]);
+        System.out.println();
+
         //creates new compiler object, and then starts the compiling process
-        Compiler c = new Compiler(p);
         c.parse();
 
 
     }
 
-    public void checkBrackets()
+    static public void checkBrackets(char[] p)
     {
+        int roundLeft = 0;
+        int roundRight = 0;
 
+        for (int j = 0; j < p.length; j++)
+        {
+            if (p.length == 1 || (p[j] == '(' && p[j + 1] == ')')) mainErrorState("Brackets cannot be empty");
+
+            if (p[j] == '(') roundLeft++;
+            else if (p[j] == ')') roundRight++;
+
+            else if (p[j] == '[')
+            {
+                j++;
+                //account for []abc] case
+                if (p[j] ==  ']') j++;
+                if (j>=p.length) mainErrorState("No match for [ bracket");
+
+                while (p[j] != ']')
+                {
+                    j++;
+                    if (j>=p.length) mainErrorState("No match for [ bracket");
+                }
+                j++;
+            }
+
+            else if (p[j] == ']' && p[j-1] != '\\') mainErrorState("Unmatched ] bracket!");
+        }
+
+        if (roundLeft < roundRight) mainErrorState("Too many ) brackets!");
+        if (roundRight < roundLeft) mainErrorState("Too many ( brackets!");
+        else
+        {
+            System.out.println("CheckBrackets: SUCCESS");
+            System.out.println("");
+        }
     }
+
+    static public char[] convertLists(char[] p)
+    {
+        String compare = "(+)*?|[";
+        String output = "";
+
+        for (int j = 0; j < p.length; j++)
+        {
+
+            //just regular part of the expression
+            if (p[j] != '[')
+                output = output + p[j];
+
+            //else if (p[j] == '[')
+            else
+            {
+                output = output + '(';
+                j++;
+                //deal with []abc]
+                if (p[j] == ']')
+                {
+                    output = output + ']';
+                    j++;
+                    output = output +'|';
+                }
+
+                //list loop!
+                while (p[j] != ']')
+                {
+                    String s = "" + p[j];
+                    if(compare.contains(s))
+                    {
+                        output = output + '\\' + p[j];
+                    }
+
+                    else output = output + p[j];
+                    j++;
+                    output = output + '|';
+                }
+                output = output.substring(0,output.length()-1);
+                output = output + ')';
+            }
+
+        }
+
+        char[] finalArray = output.toCharArray();
+        return finalArray;
+    }
+
+    //quits out of the program if the regex at any point violates any specifications; reports to screen error
+    public static void mainErrorState(String s) {
+        System.out.println("Error: " + s);
+        System.exit(1);
+    }
+
 }
+
 
 /*
 
@@ -88,7 +192,9 @@ class Compiler {
     char[] p;
     int j;
     int state = 0;
-    char[] compare = {'(', '+', ')', '^', '*', '?'};
+    char[] compare = {'(', '+', ')', '^', '*', '?', '|', '[', ']'};
+    boolean isException = false;
+
 
     /*creates compiler; im sure there's a more elegant solution to the arrays
     besides initalising them to a stupid high number, but beats me what it is :D */
@@ -103,6 +209,8 @@ class Compiler {
     from. Once it returns the expression has been complete; it then writes the resulting
     FSM to the screen */
     void parse() {
+        System.out.println();
+        System.out.println("Compiler: Start!");
         set_state(state, ' ', 0, 0);
         state++;
         //inital = the start state for the expression
@@ -195,7 +303,6 @@ class Compiler {
 
         //is bracketed
         else if (p[j] == '(') {
-            checkForEmpty();
             j++;
             r = expression();
             if (j >= p.length) errorState("Reached end of regex before finding matching bracket");
@@ -204,39 +311,6 @@ class Compiler {
             else errorState("No matching bracket");
         }
 
-        //is in square brackets - NOT IMPLEMENTED
-        else if (p[j] == '[') {
-            checkForEmpty();
-            j++;
-            //if this returns clear, if the second value is a ] we can add that to our checklist safely
-            if (p[j + 1] == ']') {
-                /* go through, add all to list
-                then cycle through list, n1 going to next part of list, n2 going to end
-                eg: a[bcd]e
-                0 | a 1 1
-                1 | b 2 4
-                2 | c 3 4
-                3 | d 4 4
-                4 | e 5 5
-                5 |   0 0
-                */
-            }
-
-        }
-
-        //is in ^[] brackets - NOT IMPLEMENTED
-        else if (p[j] == '^') {
-            if (p[j + 1] != '[') errorState("^ was not followed by [");
-            else {
-                /* Think will be similar process to above? may need to transform p[] into a
-                string array (changing all other calls as necessary), adding all values contained
-                in ^[] into one string (eg "abcd1@"), transform that into a char array and then
-                loop through? not sure how this would be represented in
-                state | ch n1 n2
-                form though
-                */
-            }
-        }
 
         //if we want to make a special character not special anymore. :( NOT IMPLEMENTED
         else if (p[j] == '\\') {
@@ -275,23 +349,9 @@ class Compiler {
     }
 
     //quits out of the program if the regex at any point violates any specifications; reports to screen error
-    void errorState(String s) {
+    public static void errorState(String s) {
         System.out.println("Error: " + s);
         System.exit(1);
     }
 
-    /*method checks that if a left bracket - (, [ - that it is used legally within the grammar
-    this does NOT check the contents itself is legal, nor for missing brackets */
-    void checkForEmpty() {
-        if (p.length == 1 || (p[j] == '(' && p[j + 1] == ')')) errorState("Brackets cannot be empty");
-        if (p[j] == '[') {
-            if (p[j + 1] == ']') {
-                for (int i = j + 1; i <= p.length; i++) {
-                    if (p[i] == ']') return;
-                }
-                errorState("did not have a closing square bracket");
-            }
-
-        }
-    }
 }
