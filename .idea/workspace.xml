@@ -19,12 +19,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/REcompiler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="464">
-              <caret line="138" lean-forward="true" selection-start-line="138" selection-end-line="138" />
+            <state relative-caret-position="467">
+              <caret line="225" column="16" lean-forward="true" selection-start-line="225" selection-start-column="16" selection-end-line="225" selection-end-column="16" />
               <folding>
                 <element signature="e#0#8293#0" expanded="true" />
                 <element signature="imports" expanded="true" />
-                <element signature="method#checkBrackets#0;class#REcompiler#0" />
               </folding>
             </state>
           </provider>
@@ -133,7 +132,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1558457177374" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1558458625427" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../301Assignment1/MakeRuns.tmp" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
@@ -161,7 +160,7 @@
     <configuration name="REcompiler" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="REcompiler" />
       <module name="301Assignment3" />
-      <option name="PROGRAM_PARAMETERS" value="a[abc?d]" />
+      <option name="PROGRAM_PARAMETERS" value="a(bc\?d)e" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -233,13 +232,13 @@
       <window_info id="Learn" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.46908316" visible="true" weight="0.25893825" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.4728145" weight="0.3347779" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.46535182" visible="true" weight="0.25893825" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.46908316" weight="0.3347779" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.53091687" side_tool="true" visible="true" weight="0.25893825" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5346482" side_tool="true" visible="true" weight="0.25893825" />
       <window_info anchor="bottom" id="Version Control" order="9" />
       <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.49418926" weight="0.28185746" />
       <window_info anchor="right" id="Coverage" side_tool="true" weight="0.32995737" />
@@ -261,11 +260,19 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/REcompiler.java</url>
+          <line>344</line>
+          <properties class="Compiler" method="isvocab">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/REcompiler.java</url>
-          <line>110</line>
+          <line>307</line>
           <properties />
-          <option name="timeStamp" value="12" />
+          <option name="timeStamp" value="15" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -329,12 +336,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/REcompiler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="464">
-          <caret line="138" lean-forward="true" selection-start-line="138" selection-end-line="138" />
+        <state relative-caret-position="467">
+          <caret line="225" column="16" lean-forward="true" selection-start-line="225" selection-start-column="16" selection-end-line="225" selection-end-column="16" />
           <folding>
             <element signature="e#0#8293#0" expanded="true" />
             <element signature="imports" expanded="true" />
-            <element signature="method#checkBrackets#0;class#REcompiler#0" />
           </folding>
         </state>
       </provider>

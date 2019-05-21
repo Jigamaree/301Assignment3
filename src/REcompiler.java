@@ -9,18 +9,14 @@ indicating the two possible next states if a match is made.
 
 Currently satisfies current rules:
 (* = known bugs exist)
-1, 2, 3, 4, 5, 6, 7, 11
+1, 2, 3, 4, 5, 6, 7, 8, 10, 11
 
-Need to make work:
-8( [] ), 9 ( ^[] ), 10 (\)
+Does not work:
+^[]
 
 ACTIVE BUGS:
-1) Can't catch stray ) brackets; treated like the end of the expression and will cut off regex early in worst
-    case scenarios.
-    eg: ab)c
+1) Backslash does not work on backslash.
 
-OTHER BUGS:
-N/A
 */
 
 import java.io.BufferedWriter;
@@ -73,17 +69,17 @@ public class REcompiler {
         {
             if (p.length == 1 || (p[j] == '(' && p[j + 1] == ')')) mainErrorState("Brackets cannot be empty");
 
-            if (p[j] == '(') roundLeft++;
-            else if (p[j] == ')') roundRight++;
+            if (p[j] == '(' && p[j -1] != '\\') roundLeft++;
+            else if (p[j] == ')' && p[j -1] != '\\') roundRight++;
 
-            else if (p[j] == '[')
+            else if (p[j] == '[' && p[j -1] != '\\')
             {
                 j++;
                 //account for []abc] case
-                if (p[j] ==  ']') j++;
+                if (p[j] ==  ']'&& p[j -1] != '\\') j++;
                 if (j>=p.length) mainErrorState("No match for [ bracket");
 
-                while (p[j] != ']')
+                while (p[j] != ']'&& p[j -1] != '\\')
                 {
                     j++;
                     if (j>=p.length) mainErrorState("No match for [ bracket");
@@ -111,11 +107,26 @@ public class REcompiler {
         for (int j = 0; j < p.length; j++)
         {
 
+            if (p[j] == '\\')
+            {
+                //do nothing
+            }
+
+            if (p[j] == '\\' && p[j-1] == '\\')
+            {
+                output = output + '\\' + p[j];
+            }
+
             //just regular part of the expression
-            if (p[j] != '[')
+            else if (p[j] != '[')
                 output = output + p[j];
 
-            //else if (p[j] == '[')
+            else if (p[j] == '[' && p[j-1] == '\\')
+            {
+                output = output + '\\' + '[';
+            }
+
+
             else
             {
                 output = output + '(';
@@ -293,6 +304,13 @@ class Compiler {
     int factor() {
         int r = 0;
 
+        //escaped character management
+        if(p[j] == '\\')
+        {
+                isException = true;
+                j++;
+        }
+
         //is just a literal
         if (isvocab(p[j])) {
             set_state(state, p[j], state + 1, state + 1);
@@ -312,16 +330,6 @@ class Compiler {
         }
 
 
-        //if we want to make a special character not special anymore. :( NOT IMPLEMENTED
-        else if (p[j] == '\\') {
-            /*
-            Think will involve some sort of variable on the factor level which makes
-            isvocab() return true - dummy code in 'isvocab'
-            boolean isException;
-            This may make more sense to have earlier in the factor method!
-            */
-        }
-
         return (r);
     }
 
@@ -335,14 +343,15 @@ class Compiler {
 
     //checks the value isnt special
     boolean isvocab(char c) {
-        if (c == '.') return true;
-        /*
+
         if (isException == true)
         {
-        isException = false;
-        return true;
+            isException = false;
+            return true;
         }
-        */
+
+        if (c == '.') return true;
+
         for (char v : compare)
             if (c == v) return false;
         return true;
