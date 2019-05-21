@@ -2,8 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8357fef8-cde6-4561-b4e2-bec4c70f20fa" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/REsearcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/REsearcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/301Assignment3/Compiler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/301Assignment3/Compiler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/301Assignment3/REcompiler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/301Assignment3/REcompiler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/REcompiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/REcompiler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.txt" beforeDir="false" afterPath="$PROJECT_DIR$/test.txt" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -12,13 +16,16 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/301Assignment3$REcompiler.ic" NAME="REcompiler Coverage Results" MODIFIED="1558440126038" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/REcompiler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="720">
-              <caret line="72" column="6" selection-start-line="72" selection-start-column="6" selection-end-line="72" selection-end-column="6" />
+            <state relative-caret-position="432">
+              <caret line="157" column="25" selection-start-line="157" selection-start-column="25" selection-end-line="157" selection-end-column="25" />
               <folding>
                 <element signature="e#0#8293#0" expanded="true" />
               </folding>
@@ -26,11 +33,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/REsearcher.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="104" column="86" lean-forward="true" selection-start-line="104" selection-start-column="86" selection-end-line="104" selection-end-column="86" />
+            <state relative-caret-position="-111">
+              <caret line="83" column="40" lean-forward="true" selection-start-line="83" selection-start-column="40" selection-end-line="83" selection-end-column="40" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -41,7 +48,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
+            <state relative-caret-position="34">
               <caret line="2" column="5" selection-start-line="2" selection-start-column="5" selection-end-line="2" selection-end-column="5" />
             </state>
           </provider>
@@ -69,6 +76,9 @@
       <find>gethe</find>
       <find>'.'</find>
       <find>' '</find>
+      <find>*</find>
+      <find>printl</find>
+      <find>j &gt;= p.length</find>
     </findStrings>
     <replaceStrings>
       <replace>p[j]</replace>
@@ -80,10 +90,10 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/REcompiler.java" />
         <option value="$PROJECT_DIR$/src/test.txt" />
         <option value="$PROJECT_DIR$/test.txt" />
         <option value="$PROJECT_DIR$/src/REsearcher.java" />
+        <option value="$PROJECT_DIR$/src/REcompiler.java" />
       </list>
     </option>
   </component>
@@ -106,7 +116,6 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -123,10 +132,11 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1558079509592" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1558450678292" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../301Assignment1/MakeRuns.tmp" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
@@ -154,7 +164,7 @@
     <configuration name="REcompiler" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="REcompiler" />
       <module name="301Assignment3" />
-      <option name="PROGRAM_PARAMETERS" value="a.bc|d" />
+      <option name="PROGRAM_PARAMETERS" value="b?" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -213,10 +223,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4993046" visible="true" weight="0.18096292" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4993046" visible="true" weight="0.18283582" />
       <window_info id="Structure" order="1" sideWeight="0.5006954" side_tool="true" weight="0.14665191" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -226,15 +236,16 @@
       <window_info id="Learn" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.47648036" weight="0.24298055" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.47924736" weight="0.33585313" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4728145" visible="true" weight="0.25893825" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.47654584" weight="0.3347779" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info active="true" anchor="bottom" id="Event Log" order="8" sideWeight="0.50581074" side_tool="true" visible="true" weight="0.28185746" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5271855" side_tool="true" visible="true" weight="0.25893825" />
       <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.49418926" visible="true" weight="0.28185746" />
+      <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.49418926" weight="0.28185746" />
+      <window_info anchor="right" id="Coverage" side_tool="true" weight="0.32995737" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.24958494" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -249,6 +260,18 @@
     <MESSAGE value="REsearcher input working, constructs FSM from output of REcompiler. Created dequeue class." />
     <MESSAGE value="REsearcher seems to be working fine :-)" />
     <option name="LAST_COMMIT_MESSAGE" value="REsearcher seems to be working fine :-)" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/REcompiler.java</url>
+          <line>154</line>
+          <properties />
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
@@ -275,41 +298,44 @@
     <entry file="jar://C:/Program Files/Java/jdk-11.0.2/lib/src.zip!/java.base/java/lang/Character.java" />
     <entry file="jar://C:/Program Files/Java/jdk-11.0.2/lib/src.zip!/java.base/java/lang/StringConcatHelper.java" />
     <entry file="jar://C:/Program Files/Java/jdk-11.0.2/lib/src.zip!/java.base/java/lang/invoke/LambdaForm.java" />
-    <entry file="jar://C:/Program Files/Java/jdk-11.0.2/lib/src.zip!/java.base/java/lang/invoke/DirectMethodHandle.java" />
     <entry file="jrt://C:/Program Files/Java/jdk-11.0.2!/java.base/java/lang/invoke/DirectMethodHandle$Holder.class" />
     <entry file="file://$PROJECT_DIR$/301Assignment3.iml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="jrt:///usr/lib/jvm/default-java!/java.base/java/lang/Object.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="11" selection-start-line="13" selection-start-column="11" selection-end-line="13" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/REcompiler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="720">
-          <caret line="72" column="6" selection-start-line="72" selection-start-column="6" selection-end-line="72" selection-end-column="6" />
-          <folding>
-            <element signature="e#0#8293#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="jrt:///usr/lib/jvm/default-java!/java.base/java/lang/Object.class" />
     <entry file="file://$PROJECT_DIR$/test.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
+        <state relative-caret-position="34">
           <caret line="2" column="5" selection-start-line="2" selection-start-column="5" selection-end-line="2" selection-end-column="5" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/REsearcher.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="104" column="86" lean-forward="true" selection-start-line="104" selection-start-column="86" selection-end-line="104" selection-end-column="86" />
+        <state relative-caret-position="-111">
+          <caret line="83" column="40" lean-forward="true" selection-start-line="83" selection-start-column="40" selection-end-line="83" selection-end-column="40" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk-11.0.2/lib/src.zip!/java.base/java/lang/invoke/DirectMethodHandle.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="309" selection-start-line="309" selection-end-line="309" />
+          <folding>
+            <element signature="e#13575#13576#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/REcompiler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="157" column="25" selection-start-line="157" selection-start-column="25" selection-end-line="157" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#8293#0" expanded="true" />
           </folding>
         </state>
       </provider>

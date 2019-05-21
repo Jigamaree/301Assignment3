@@ -11,17 +11,16 @@ Currently satisfies current rules:
 (* = known bugs exist)
 1, 2, 3, 4, 6, 7*, 11
 
+Need to make work:
+5 (?), 8( [] ), 9 ( ^[] ), 10 (\)
+
 ACTIVE BUGS:
 1) Can't catch stray ) brackets; treated like the end of the expression and will cut off regex early in worst
     case scenarios.
     eg: ab)c
 
 OTHER BUGS:
-(not sure whether failing these are failing the specs, but have taken note)
-1) If the entire expression is bracketed, the program fails. Redundant?
-    eg: (ab)
-2) for | function: (ab)|c fails. Might be alright since is technically left recursive and therefore
-   outside the specs?
+N/A
 */
 
 import java.io.BufferedWriter;
@@ -48,20 +47,13 @@ public class REcompiler {
         Compiler c = new Compiler(p);
         c.parse();
 
-        /* STANDARD OUTPUT GOES HERE - could easily move it to c.parse, but easier to
-        find here! Also less easily confused, since parse write it to screen. */
-        char[] ch = c.ch;
-        int[] next1 = c.next1;
-        int[] next2 = c.next2;
-        int state = c.state;
-
-        for (int i = 0; i <= state; i++) {
-            //output (ch[i] + " " + next1[i] + " " + next2[i]);
-        }
-
 
     }
 
+    public void checkBrackets()
+    {
+
+    }
 }
 
 /*
@@ -96,6 +88,7 @@ class Compiler {
     char[] p;
     int j;
     int state = 0;
+    char[] compare = {'(', '+', ')', '^', '*', '?'};
 
     /*creates compiler; im sure there's a more elegant solution to the arrays
     besides initalising them to a stupid high number, but beats me what it is :D */
@@ -110,9 +103,15 @@ class Compiler {
     from. Once it returns the expression has been complete; it then writes the resulting
     FSM to the screen */
     void parse() {
+        set_state(state, ' ', 0, 0);
+        state++;
         //inital = the start state for the expression
         int initial = expression();
+        //finishing equation
         set_state(state, ' ', 0, 0);
+        //setting the proper start state
+        next1[0] = initial;
+        next2[0] = initial;
         for (int i = 0; i <= state; i++) {
             if (i < 10) System.out.println(i + " | " + ch[i] + " " + next1[i] + " " + next2[i]);
             else System.out.println(i + " | " + ch[i] + " " + next1[i] + " " + next2[i]);
@@ -142,6 +141,26 @@ class Compiler {
             j++;
             r = state;
             state++;
+            if(j >= p.length) return r;
+        }
+
+        //if we can see something 0-1 times
+        if (p[j] == '?') {
+            set_state(state, ' ', state + 1, t1);
+            j++;
+            r = state;
+
+            //state++;
+
+            for (int i = 0; i <= state; i++ )
+            {
+                if (next1[i] == state) next1[i] = state+1;
+                if (next2[i] == state) next2[i] = state+1;
+            }
+
+            state++;
+
+            if(j >= p.length) return r;
         }
 
         //the OR statement of this regex
@@ -179,7 +198,6 @@ class Compiler {
             checkForEmpty();
             j++;
             r = expression();
-            System.out.println('*');
             if (j >= p.length) errorState("Reached end of regex before finding matching bracket");
             if (p[j] == ')')
                 j++;
@@ -251,7 +269,6 @@ class Compiler {
         return true;
         }
         */
-        char[] compare = {'(', '+', ')', '^', '*'};
         for (char v : compare)
             if (c == v) return false;
         return true;
