@@ -16,6 +16,7 @@ Does not work:
 
 ACTIVE BUGS:
 1) Backslash does not work on backslash.
+2) A list followed by a bracketed list does not work as intended 
 
 */
 
@@ -56,8 +57,6 @@ public class REcompiler {
 
         //creates new compiler object, and then starts the compiling process
         c.parse();
-
-
     }
 
     static public void checkBrackets(char[] p)
@@ -161,6 +160,8 @@ public class REcompiler {
         char[] finalArray = output.toCharArray();
         return finalArray;
     }
+
+    //static public
 
     //quits out of the program if the regex at any point violates any specifications; reports to screen error
     public static void mainErrorState(String s) {
@@ -352,8 +353,9 @@ class Compiler {
 
         if (c == '.') return true;
 
-        for (char v : compare)
-            if (c == v) return false;
+        String s = "" + c;
+        String compare = "(+)*?|[";
+            if(compare.contains(s)) return false;
         return true;
     }
 
